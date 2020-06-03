@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<path id="class.path">
+		<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="echo">
+		<echo>${basedir}</echo>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${basedir}/build/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="${basedir}/build/classes" />
+		
+		<javac destdir="${basedir}/build/classes" source="1.8" target="1.8">
+			<src path="src/"/>
+		</javac>
+	</target>
+	
+	<target name="package-war" depends="compile">
+		<war destfile="build/Struts2App.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent">
+				<include name="**/*.*" />
+			</fileset>
+			
+			<lib dir="WebContent/WEB-INF/lib"></lib>
+			<classes dir="${basedir}/build/classes" />
+		</war>
+	</target>
+</project>
