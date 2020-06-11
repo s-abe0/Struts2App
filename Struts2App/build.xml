@@ -36,4 +36,10 @@
 			<classes dir="${basedir}/build/classes" />
 		</war>
 	</target>
+	
+	<target name="package-ear" depends="package-war">
+		<ear destfile="build/Struts2App.ear" appxml="application.xml">
+			<fileset dir="build" includes="*.war" />
+		</ear>
+	</target>
 </project>
