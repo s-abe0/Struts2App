@@ -1,15 +1,31 @@
 
 def branch = "master"
 def url = "https://github.com/s-abe0/Struts2App.git"
+def wasHome = "/opt/IBM/WebSphere/AppServer"
 
 pipeline {
 	agent any
 	
+	tools {
+	    ant 'ant-tool' 
+	    jdk 'jdk-tool'
+	}
+	
 	stages {
-		stage('Clone repo') {
+		stage('Build') {
 			steps {
-				git branch: "${branch}", url: "${url}"
+				dir("Struts2App") {
+				    sh "ant package-ear"
+				}
 			}
+		}
+		
+		stage('Deploy') {
+		    steps {
+		        dir("Struts2App") {
+		            sh "sudo $wasHome/bin/wsadmin.sh -lang jython -f $wasHome/deployScripts/deployStruts2App.py"
+		        }
+		    }
 		}
 	}
 }
