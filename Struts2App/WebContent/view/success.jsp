@@ -8,5 +8,6 @@
 </head>
 <body>
     <h2>Success Page!</h2>
+    <p>Built and deployed from Jenkins! :D</p>
 </body>
 </html>
