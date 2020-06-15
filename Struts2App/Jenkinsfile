@@ -1,0 +1,15 @@
+
+def branch = "master"
+def url = "https://github.com/s-abe0/Struts2App.git"
+
+pipeline {
+	agent any
+	
+	stages {
+		stage('Clone repo') {
+			steps {
+				git branch: "${branch}", url: "${url}"
+			}
+		}
+	}
+}
