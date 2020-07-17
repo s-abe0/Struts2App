@@ -1,5 +1,10 @@
 deployEAR="/opt/IBM/WebSphere/AppServer/earFiles/Struts2App.ear"
-appManager="AdminControl.queryNames('cell=nullNode01Cell,node=wasNode01,type=ApplicationManager,process=server1,*')
+
+cell=AdminConfig.list('Cell')
+cellname=AdminConfig.showAttribute(cell, 'name')
+nodename=AdminConfig.showAttribute(AdminConfig.list('Node', cell), 'name')
+
+appManager=AdminControl.queryNames('cell=' + cellname + ',node=' + nodename + ',type=ApplicationManager,process=server1,*')
 
 # Install the app
 def installStruts2App:
@@ -11,7 +16,7 @@ def installStruts2App:
 # Update the app
 def updateStruts2App:
     AdminApp.update('Struts2AppEAR', 'app', '[-operation update -contents /opt/IBM/WebSphere/AppServer/earFiles/Struts2App.ear -usedefaultbindings -nodeployejb]')
-    AdminConfig.save()i
+    AdminConfig.save()
 
 installStruts2App()
 updateStruts2App()
